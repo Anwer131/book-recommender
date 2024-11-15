@@ -1,24 +1,19 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify
 from flask_cors import CORS
 import pandas as pd
 import os
 
-app = Flask(__name__, static_folder='../frontend/build', static_url_path='')
+app = Flask(__name__)
 CORS(app)
 
-# Load the dataset
-data = pd.read_pickle('./backend/popular.pkl')
+# Load the dataset using an absolute path
+data_path = os.path.join(os.path.dirname(__file__), 'popular.pkl')
+data = pd.read_pickle(data_path)
 
-# API endpoint to get book data
 @app.route('/api/books', methods=['GET'])
 def get_books():
     books = data.to_dict(orient='records')
     return jsonify(books)
-
-# Serve React frontend
-@app.route('/')
-def serve():
-    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
