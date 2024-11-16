@@ -6,7 +6,7 @@ import os
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Allow Cross-Origin requests
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load the datasets
 popular_df = pd.read_pickle('popular.pkl')
