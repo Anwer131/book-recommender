@@ -3,7 +3,7 @@ from flask_cors import CORS
 import pandas as pd
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 CORS(app)
 
 # Load the dataset using an absolute path
